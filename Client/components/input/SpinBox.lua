@@ -4,7 +4,7 @@ function UMG.NSpinBox:Constructor()
     self.Super:Constructor( "nwgui-assets::AW_SpinBox" )
 
     self.Font = {
-        ["FontFamily"] = "package://advanced-nanos-widgets/Client/fonts/Roboto-Bold.ttf",
+        ["FontFamily"] = "package://nanos-wgui/Client/fonts/Roboto-Bold.ttf",
         ["Typeface"] = "Bold",
         ["Size"] = 12,
         ["LetterSpacing"] = 0,
