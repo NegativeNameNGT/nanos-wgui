@@ -3,7 +3,7 @@ UMG.NButton = UMG.Inherit(UMG.PanelWidget, "NButton", {
 })
 
 function UMG.NButton:Constructor()
-    self.Super:Constructor( "advanced-nanos-widgets-assets::AW_Button" )
+    self.Super:Constructor( "nwgui-assets::AW_Button" )
 
     self.NativeWidget = Widget(NativeWidget.Button)
 
