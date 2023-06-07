@@ -204,7 +204,7 @@ WGui = {
     }
 }
 
-Package.Export( "UMG", UMG )
+Package.Export( "WGui", WGui )
 
 Package.Require( "BaseWidget.lua" )
 
