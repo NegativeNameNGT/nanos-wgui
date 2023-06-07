@@ -230,6 +230,3 @@ end
 for _,v in pairs( Package.GetFiles( "Client/slots/", ".lua" ) ) do
     Package.Require(v)
 end
-
-
-Package.Require("example.lua")
