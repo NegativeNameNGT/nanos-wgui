@@ -21,8 +21,8 @@ function HorizontalBoxSlot.Methods.GetSize( self )
 end
 
 -- Sets the horizontal alignment of the slot
----@param Alignment WGui.HorizontalAlignment
-function HorizontalBoxSlot.Methods.SetHorizontalAlignment( self, Alignment )
+---@param Alignment WGui.HAlign
+function HorizontalBoxSlot.Methods.HAlign( self, Alignment )
     self:CallBlueprintEvent("HB_SetHorizontalAlignment", Alignment)
     self.Slot.HorizontalAlignment = Alignment
     return self
@@ -30,13 +30,13 @@ end
 
 -- Gets the horizontal alignment of the slot
 ---@return number
-function HorizontalBoxSlot.Methods.GetHorizontalAlignment( self )
-    return self.Slot.HorizontalAlignment or WGui.HorizontalAlignment.Fill
+function HorizontalBoxSlot.Methods.GetHAlign( self )
+    return self.Slot.HorizontalAlignment or WGui.HAlign.Fill
 end
 
 -- Sets the vertical alignment of the slot
----@param Alignment WGui.VerticalAlignment
-function HorizontalBoxSlot.Methods.SetVerticalAlignment( self, Alignment )
+---@param Alignment WGui.VAlign
+function HorizontalBoxSlot.Methods.VAlign( self, Alignment )
     self:CallBlueprintEvent("HB_SetVerticalAlignment", Alignment)
     self.Slot.VerticalAlignment = Alignment
     return self
@@ -44,6 +44,6 @@ end
 
 -- Gets the vertical alignment of the slot
 ---@return number
-function HorizontalBoxSlot.Methods.GetVerticalAlignment( self )
-    return self.Slot.VerticalAlignment or WGui.VerticalAlignment.Fill
+function HorizontalBoxSlot.Methods.GetVAlign( self )
+    return self.Slot.VerticalAlignment or WGui.VAlign.Fill
 end

@@ -6,8 +6,8 @@ function ScaleBoxSlot.Constructor( Parent )
 end
 
 -- Sets the horizontal alignment of the slot
----@param Alignment WGui.HorizontalAlignment
-function ScaleBoxSlot.Methods.SetHorizontalAlignment( self, Alignment )
+---@param Alignment WGui.HAlign
+function ScaleBoxSlot.Methods.HAlign( self, Alignment )
     self:CallBlueprintEvent("SCB_SetHorizontalAlignment", Alignment)
     self.Slot.HorizontalAlignment = Alignment
     return self
@@ -15,13 +15,13 @@ end
 
 -- Gets the horizontal alignment of the slot
 ---@return number
-function ScaleBoxSlot.Methods.GetHorizontalAlignment( self )
-    return self.Slot.HorizontalAlignment or WGui.HorizontalAlignment.Fill
+function ScaleBoxSlot.Methods.GetHAlign( self )
+    return self.Slot.HorizontalAlignment or WGui.HAlign.Fill
 end
 
 -- Sets the vertical alignment of the slot
----@param Alignment WGui.VerticalAlignment
-function ScaleBoxSlot.Methods.SetVerticalAlignment( self, Alignment )
+---@param Alignment WGui.VAlign
+function ScaleBoxSlot.Methods.VAlign( self, Alignment )
     self:CallBlueprintEvent("SCB_SetVerticalAlignment", Alignment)
     self.Slot.VerticalAlignment = Alignment
     return self
@@ -29,6 +29,6 @@ end
 
 -- Gets the vertical alignment of the slot
 ---@return number
-function ScaleBoxSlot.Methods.GetVerticalAlignment( self )
-    return self.Slot.VerticalAlignment or WGui.VerticalAlignment.Fill
+function ScaleBoxSlot.Methods.GetVAlign( self )
+    return self.Slot.VerticalAlignment or WGui.VAlign.Fill
 end

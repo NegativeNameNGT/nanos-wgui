@@ -34,8 +34,8 @@ function UniformGridSlot.Methods.GetRow( self )
 end
 
 -- Sets the horizontal alignment of the slot
----@param Alignment WGui.HorizontalAlignment
-function UniformGridSlot.Methods.SetHorizontalAlignment( self, Alignment )
+---@param Alignment WGui.HAlign
+function UniformGridSlot.Methods.HAlign( self, Alignment )
     self:CallBlueprintEvent("UG_SetHorizontalAlignment", Alignment)
     self.Slot.HorizontalAlignment = Alignment
     return self
@@ -43,13 +43,13 @@ end
 
 -- Gets the horizontal alignment of the slot
 ---@return number
-function UniformGridSlot.Methods.GetHorizontalAlignment( self )
-    return self.Slot.HorizontalAlignment or WGui.HorizontalAlignment.Fill
+function UniformGridSlot.Methods.GetHAlign( self )
+    return self.Slot.HorizontalAlignment or WGui.HAlign.Fill
 end
 
 -- Sets the vertical alignment of the slot
----@param Alignment WGui.VerticalAlignment
-function UniformGridSlot.Methods.SetVerticalAlignment( self, Alignment )
+---@param Alignment WGui.VAlign
+function UniformGridSlot.Methods.VAlign( self, Alignment )
     self:CallBlueprintEvent("UG_SetVerticalAlignment", Alignment)
     self.Slot.VerticalAlignment = Alignment
     return self
@@ -57,6 +57,6 @@ end
 
 -- Gets the vertical alignment of the slot
 ---@return number
-function UniformGridSlot.Methods.GetVerticalAlignment( self )
-    return self.Slot.VerticalAlignment or WGui.VerticalAlignment.Fill
+function UniformGridSlot.Methods.GetVAlign( self )
+    return self.Slot.VerticalAlignment or WGui.VAlign.Fill
 end

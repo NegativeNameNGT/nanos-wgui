@@ -15,24 +15,24 @@ function WrapBoxSlot.Methods.SetFillSpanWhenLessThan( self, FillSpanWhenLessThan
     return self
 end
 
-function WrapBoxSlot.Methods.SetHorizontalAlignment( self, Alignment )
+function WrapBoxSlot.Methods.HAlign( self, Alignment )
     self:CallBlueprintEvent("WB_SetHorizontalAlignment", Alignment)
     self.Slot.HorizontalAlignment = Alignment
     return self
 end
 
-function WrapBoxSlot.Methods.GetHorizontalAlignment( self )
-    return self.Slot.HorizontalAlignment or WGui.HorizontalAlignment.Fill
+function WrapBoxSlot.Methods.GetHAlign( self )
+    return self.Slot.HorizontalAlignment or WGui.HAlign.Fill
 end
 
-function WrapBoxSlot.Methods.SetVerticalAlignment( self, Alignment )
+function WrapBoxSlot.Methods.VAlign( self, Alignment )
     self:CallBlueprintEvent("WB_SetVerticalAlignment", Alignment)
     self.Slot.VerticalAlignment = Alignment
     return self
 end
 
-function WrapBoxSlot.Methods.GetVerticalAlignment( self )
-    return self.Slot.VerticalAlignment or WGui.VerticalAlignment.Fill
+function WrapBoxSlot.Methods.GetVAlign( self )
+    return self.Slot.VerticalAlignment or WGui.VAlign.Fill
 end
 
 function WrapBoxSlot.Methods.SetNewLine( self, NewLine )

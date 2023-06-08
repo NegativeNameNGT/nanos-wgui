@@ -29,7 +29,7 @@ function WGui.NWrapBox:SetExplicitWrapSize( bInExplicitWrapSize )
 end
 
 -- Sets the content horizontal alignment
----@param InHorizontalAlignment WGui.HorizontalAlignment
+---@param InHorizontalAlignment WGui.HAlign
 function WGui.NWrapBox:SetContentHorizontalAlignment( InHorizontalAlignment )
     self:CallBlueprintEvent( "SetContentHorizontalAlignment", InHorizontalAlignment )
     return self

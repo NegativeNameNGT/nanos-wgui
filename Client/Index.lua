@@ -96,14 +96,14 @@ WGui = {
         Fill = 1
     },
 
-    HorizontalAlignment = {
+    HAlign = {
         Fill = 0,
         Left = 1,
         Center = 2,
         Right = 3
     },
 
-    VerticalAlignment = {
+    VAlign = {
         Fill = 0,
         Top = 1,
         Center = 2,
