@@ -77,6 +77,7 @@ function CanvasPanelSlot.Methods.SetAnchor( self, Anchor )
     end
 
     self.Slot.Anchor = Anchor
+    return self
 end
 
 -- Gets the anchor of the slot
