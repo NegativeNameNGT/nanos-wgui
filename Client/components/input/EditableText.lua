@@ -75,6 +75,10 @@ function WGui.NEditableText:SetFontSize( iFontSize )
 end
 
 function WGui.NEditableText:SetFont( sFont, sTypeFace )
+    if string.sub(sFont, 1, 1) == "/" then
+        self:CallBlueprintEvent("SetFont", nil, sTypeFace or "", sFont)
+        return self
+    end
     self:CallBlueprintEvent("SetFont", sFont, sTypeFace or "")
     return self
 end

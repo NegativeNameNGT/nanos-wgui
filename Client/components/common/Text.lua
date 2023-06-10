@@ -71,6 +71,10 @@ end
 ---@param Font string
 ---@param Typeface string
 function WGui.NText:SetFont(Font, Typeface)
+    if string.sub(Font, 1, 1) == "/" then
+        self:CallBlueprintEvent("SetFont", nil, Typeface or "", Font)
+        return self
+    end
     self:CallBlueprintEvent("SetFont", Font, Typeface or "")
     return self
 end
