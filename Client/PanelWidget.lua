@@ -14,7 +14,7 @@ function WGui.PanelWidget:GetAllChildren()
     return self:GetValue("INTERNAL_Children", {})
 end
 
-function wgui_raw_addslot(self, eChild, Slot)
+function wgui_raw_addslot(self, eChild)
     local tChildSlot = GetChildSlot(self.ChildSlot)
     for k,v in pairs(tChildSlot.Methods) do
         eChild[k] = v
@@ -31,7 +31,7 @@ function wgui_raw_add(self, eChild)
 end
 
 function wgui_raw_removeslot(self, eChild)
-    if eChild.Parent.ChildSlot then
+    if self.ChildSlot then
         local tChildSlot = GetChildSlot(eChild.Parent.ChildSlot)
         for k,_ in pairs(tChildSlot.Methods) do
             eChild[k] = nil
@@ -70,7 +70,7 @@ function WGui.PanelWidget:Add(eChild, tParameters)
     if eChild.Parent then wgui_raw_removeslot(self, eChild) end
 
     -- Add slot functions to the child
-    if self.ChildSlot then wgui_raw_addslot(self, eChild, self.ChildSlot) end
+    if self.ChildSlot then wgui_raw_addslot(self, eChild) end
 
     wgui_raw_add(self, eChild)
     return self
