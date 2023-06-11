@@ -1,5 +1,6 @@
 WGui.NGrid = WGui.Inherit(WGui.PanelWidget, "NGrid", {
-    ChildSlot = "GridSlot"
+    ChildSlot = "GridSlot",
+    AddChild = "AddChildOverride"
 })
 
 function WGui.NGrid:Constructor()
@@ -11,6 +12,6 @@ local NativeAdd = WGui.NGrid.Add
 function WGui.NGrid:Add( eWidget, iInRow, iInColumn )
     self.Slot.Column = iInColumn
     self.Slot.Row = iInRow
-    NativeAdd(self, eWidget, "AddChildOverride", {iInRow, iInColumn})
+    NativeAdd(self, eWidget, {iInRow, iInColumn})
     return self
 end

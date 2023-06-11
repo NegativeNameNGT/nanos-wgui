@@ -1,5 +1,6 @@
 WGui.NUniformGrid = WGui.Inherit(WGui.PanelWidget, "NUniformGrid", {
-    ChildSlot = "UniformGridSlot"
+    ChildSlot = "UniformGridSlot",
+    AddChild = "AddChildOverride"
 })
 
 function WGui.NUniformGrid:Constructor()
@@ -11,7 +12,7 @@ local NativeAdd = WGui.NGrid.Add
 function WGui.NUniformGrid:Add( eWidget, iInRow, iInColumn )
     self.Slot.Column = iInColumn
     self.Slot.Row = iInRow
-    NativeAdd(self, eWidget, "AddChildOverride", {iInRow, iInColumn})
+    NativeAdd(self, eWidget, iInRow, iInColumn)
     return self
 end
 
