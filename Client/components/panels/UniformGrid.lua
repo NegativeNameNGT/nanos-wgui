@@ -1,6 +1,5 @@
 WGui.NUniformGrid = WGui.Inherit(WGui.PanelWidget, "NUniformGrid", {
-    ChildSlot = "UniformGridSlot",
-    AddChild = "AddChildOverride"
+    ChildSlot = "UniformGridSlot"
 })
 
 function WGui.NUniformGrid:Constructor()

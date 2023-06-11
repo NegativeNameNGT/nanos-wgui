@@ -1,6 +1,5 @@
 WGui.NGrid = WGui.Inherit(WGui.PanelWidget, "NGrid", {
-    ChildSlot = "GridSlot",
-    AddChild = "AddChildOverride"
+    ChildSlot = "GridSlot"
 })
 
 function WGui.NGrid:Constructor()
