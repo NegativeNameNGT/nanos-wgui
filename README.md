@@ -3,6 +3,7 @@
 
 Framework to make user interfaces in Nanos World
 
+Asset Pack (Required to load WGui): https://github.com/NegativeNameNGT/nanos-wgui-assets
+
 Wiki: https://negativenames-organization.gitbook.io/wgui-1/
 
-AssetPack: https://github.com/NegativeNameNGT/nanos-wgui-assets
