@@ -24,9 +24,12 @@ end
 
 function wgui_raw_add(self, eChild)
     local tChildren = self:GetAllChildren()
-    tChildren[eChild:GetID()] = eChild
+
+    local iIndex = #tChildren + 1
+    tChildren[ iIndex ] = eChild
     self:SetValue("INTERNAL_Children", tChildren)
 
+    eChild.ChildrenID = iIndex
     eChild.Parent = self
 end
 
@@ -47,8 +50,11 @@ end
 
 function wgui_raw_remove(self, eChild)
     local tChildren = self:GetAllChildren()
-    tChildren[eChild:GetID()] = nil
+    tChildren[eChild.ChildrenID] = nil
     self:SetValue("INTERNAL_Children", tChildren)
+
+    eChild.ChildrenID = nil
+    eChild.Parent = nil
 end
 
 function WGui.PanelWidget:Add(eChild, tParameters)
@@ -94,13 +100,12 @@ function WGui.PanelWidget:RemoveChildAt(iIndex)
 end
 
 function WGui.PanelWidget:GetChildIndex(eChild)
+    return eChild.ChildrenID or -1
+end
+
+function WGui.PanelWidget:GetChildAt(iIndex)
     local tChildren = self:GetAllChildren()
-    for i,v in pairs(tChildren) do
-        if v == eChild then
-            return i
-        end
-    end
-    return -1
+    return tChildren[iIndex]
 end
 
 function WGui.PanelWidget:ClearChildren()
