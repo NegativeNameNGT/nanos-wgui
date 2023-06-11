@@ -19,7 +19,12 @@ function wgui_raw_addslot(self, eChild)
     for k,v in pairs(tChildSlot.Methods) do
         eChild[k] = v
     end
-    tChildSlot.Constructor( eChild )
+    local tSlotData = eChild.Slot
+    if tSlotData and tSlotData.Parent == self:GetID() then
+        eChild.Slot = tSlotData
+    else
+        eChild.Slot = { Parent = self:GetID() }
+    end
 end
 
 function wgui_raw_add(self, eChild)

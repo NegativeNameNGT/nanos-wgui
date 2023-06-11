@@ -1,10 +1,5 @@
 local OverlaySlot = RegisterChildSlot("OverlaySlot")
 
--- Constructor
-function OverlaySlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the horizontal alignment of the slot
 ---@param Alignment WGui.HAlign
 function OverlaySlot.Methods.HAlign( self, Alignment )

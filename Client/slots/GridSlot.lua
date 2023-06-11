@@ -1,10 +1,5 @@
 local GridSlot = RegisterChildSlot("GridSlot")
 
--- Constructor
-function GridSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the column of the slot
 ---@param Column number
 function GridSlot.Methods.SetColumn( self, Column )

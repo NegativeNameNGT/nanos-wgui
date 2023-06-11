@@ -1,10 +1,5 @@
 local BorderSlot = RegisterChildSlot("BorderSlot")
 
--- Constructor
-function BorderSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the horizontal alignment of the slot
 ---@param Alignment WGui.HAlign
 function BorderSlot.Methods.HAlign( self, Alignment )

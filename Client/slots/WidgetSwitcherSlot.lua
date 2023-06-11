@@ -1,10 +1,5 @@
 local WidgetSwitcherSlot = RegisterChildSlot("WidgetSwitcherSlot")
 
--- Constructor
-function WidgetSwitcherSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the horizontal alignment of the slot
 ---@param Alignment WGui.HAlign
 function WidgetSwitcherSlot.Methods.HAlign( self, Alignment )

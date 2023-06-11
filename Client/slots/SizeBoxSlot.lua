@@ -1,10 +1,5 @@
 local SizeBoxSlot = RegisterChildSlot("SizeBoxSlot")
 
--- Constructor
-function SizeBoxSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the horizontal alignment of the slot
 ---@param Alignment WGui.HAlign
 function SizeBoxSlot.Methods.HAlign( self, Alignment )

@@ -1,10 +1,5 @@
 local WrapBoxSlot = RegisterChildSlot("WrapBoxSlot")
 
--- Constructor
-function WrapBoxSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 function WrapBoxSlot.Methods.SetFillEmptySpace( self, FillEmptySpace )
     self:CallBlueprintEvent("WB_SetFillEmptySpace", FillEmptySpace)
     return self

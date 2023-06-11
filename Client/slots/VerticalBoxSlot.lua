@@ -1,10 +1,5 @@
 local VerticalBoxSlot = RegisterChildSlot("VerticalBoxSlot")
 
--- Constructor
-function VerticalBoxSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the size of the slot
 ---@param Value number
 ---@param SizeRule WGui.SizeRule

@@ -1,10 +1,5 @@
 local UniformGridSlot = RegisterChildSlot("UniformGridSlot")
 
--- Constructor
-function UniformGridSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the column of the slot
 ---@param Column number
 function UniformGridSlot.Methods.SetColumn( self, Column )

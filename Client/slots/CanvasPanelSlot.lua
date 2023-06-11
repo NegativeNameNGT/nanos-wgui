@@ -1,10 +1,5 @@
 local CanvasPanelSlot = RegisterChildSlot("CanvasPanelSlot")
 
--- Constructor
-function CanvasPanelSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the position of the slot
 ---@param Position Vector2D
 function CanvasPanelSlot.Methods.SetPos( self, Position )

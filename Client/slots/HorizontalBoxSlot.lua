@@ -1,10 +1,5 @@
 local HorizontalBoxSlot = RegisterChildSlot("HorizontalBoxSlot")
 
--- Constructor
-function HorizontalBoxSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the size of the slot
 ---@param Value number
 ---@param SizeRule WGui.SizeRule

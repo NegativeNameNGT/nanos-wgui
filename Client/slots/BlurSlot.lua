@@ -1,10 +1,5 @@
 local BlurSlot = RegisterChildSlot("BlurSlot")
 
--- Constructor
-function BlurSlot.Constructor( Parent )
-    Parent.Slot = {}
-end
-
 -- Sets the horizontal alignment of the slot
 ---@param Alignment WGui.HAlign
 function BlurSlot.Methods.HAlign( self, Alignment )
