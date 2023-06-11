@@ -243,7 +243,7 @@ function WGui.PanelWidget:GetAllChildren()
     return self:GetValue("INTERNAL_Children", {})
 end
 
-function WGui.PanelWidget:Add(eChild, ...)
+function WGui.PanelWidget:Add(eChild, sAddChildOverride, ...)
     -- Checks if the panel reached the children limit
     if self.ChildrenLimit then
         if #self:GetAllChildren() >= self.ChildrenLimit then
@@ -253,9 +253,9 @@ function WGui.PanelWidget:Add(eChild, ...)
     end
 
     if ... then
-        self:CallBlueprintEvent("AddChild", eChild, table.unpack(...))
+        self:CallBlueprintEvent(sAddChildOverride or "AddChild", eChild, table.unpack(...))
     else
-        self:CallBlueprintEvent("AddChild", eChild)
+        self:CallBlueprintEvent(sAddChildOverride or "AddChild", eChild)
     end
 
     -- Removes the slot's methods from the previous parent
@@ -285,6 +285,16 @@ function WGui.PanelWidget:Add(eChild, ...)
     end
 
     local tChildren = self:GetAllChildren()
-    table.insert(tChildren, eChild)
+    tChildren[eChild:GetID()] = eChild
     self:SetValue("INTERNAL_Children", tChildren)
+    return self
+end
+
+function WGui.PanelWidget:Remove(eChild)
+    self:CallBlueprintEvent("RemoveChild", eChild)
+    eChild.Parent = nil
+    local tChildren = self:GetAllChildren()
+    tChildren[eChild:GetID()] = nil
+    self:SetValue("INTERNAL_Children", tChildren)
+    return self
 end
