@@ -10,35 +10,11 @@ function WGui.NButton:Constructor()
     self:CallBlueprintEvent("Initialize", self.NativeWidget)
 
     -- Events --
-    self.NativeWidget:BindBlueprintEventDispatcher("OnClicked", function()
-        if self.OnClicked then
-            self:OnClicked()
-        end
-    end)
-
-    self.NativeWidget:BindBlueprintEventDispatcher("OnHovered", function()
-        if self.OnHovered then
-            self:OnHovered()
-        end
-    end)
-
-    self.NativeWidget:BindBlueprintEventDispatcher("OnUnhovered", function()
-        if self.OnUnhovered then
-            self:OnUnhovered()
-        end
-    end)
-
-    self.NativeWidget:BindBlueprintEventDispatcher("OnPressed", function()
-        if self.OnPressed then
-            self:OnPressed()
-        end
-    end)
-
-    self.NativeWidget:BindBlueprintEventDispatcher("OnReleased", function()
-        if self.OnReleased then
-            self:OnReleased()
-        end
-    end)
+    self:AddBindable("OnClicked", "OnClicked", self.NativeWidget)
+    self:AddBindable("OnHovered", "OnHovered", self.NativeWidget)
+    self:AddBindable("OnUnhovered", "OnUnhovered", self.NativeWidget)
+    self:AddBindable("OnPressed", "OnPressed", self.NativeWidget)
+    self:AddBindable("OnReleased", "OnReleased", self.NativeWidget)
 
     return self
 end

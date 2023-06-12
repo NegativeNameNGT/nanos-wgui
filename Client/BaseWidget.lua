@@ -15,7 +15,7 @@ WGui.BaseWidget.Overridables = {
     end
 }
 
-WGui.BaseWidget.Bindables = {
+WGui.Bindables = {
     OnMouseMove = "MouseMove",
     OnMouseButtonDown = "MouseButtonDown",
     OnMouseButtonUp = "MouseButtonUp",
@@ -51,23 +51,41 @@ function WGui.BaseWidget:GetID()
     return self.ID
 end
 
-function WGui.BaseWidget:AddBindable( sName, sEvent )
-    self.Bindables[sName] = sEvent
+function WGui.BaseWidget:AddBindable( sName, sEvent, CustomWidget )
+    if not self.Bindables then self.Bindables = {} end
+    self.Bindables[sName] = {sEvent, CustomWidget}
+end
+
+local function GetBindable( self, sKey )
+    if WGui.Bindables[sKey] then
+        return {WGui.Bindables[sKey], self}
+    end
+
+    if self.Bindables and self.Bindables[sKey] then
+        return self.Bindables[sKey]
+    end
+
+    return nil
 end
 
 function WGui.BaseWidget:newindex( sKey, xValue )
-    if self.Bindables[sKey] then
-        if type( xValue ) == "function" then
-            self:UnbindBlueprintEventDispatcher( self.Bindables[sKey] )
-
-            self:BindBlueprintEventDispatcher( self.Bindables[sKey], function ( eSelf, ...)
-                if type(eSelf[sKey]) == "function" then
-                    eSelf[sKey](...)
-                else
-                    eSelf:UnbindBlueprintEventDispatcher( eSelf.Bindables[sKey] )
-                end
-            end )
+    local Bindable = GetBindable(self, sKey)
+    if Bindable then
+        if not self.BindedEvents then self.BindedEvents = {} end
+        if self.BindedEvents[sKey] then
+           Bindable[2]:UnbindBlueprintEventDispatcher(Bindable[1], self.BindedEvents[sKey])
         end
+
+        local function Bind( _, ... )
+            if type(self[sKey]) == "function" then
+                self[sKey](...)
+                return
+            end
+            Bindable[2]:UnbindBlueprintEventDispatcher(Bindable[1], self.BindedEvents[sKey])
+        end
+        Bindable[2]:BindBlueprintEventDispatcher(Bindable[1], Bind)
+        
+        self.BindedEvents[sKey] = Bind
     end
     rawset(self, sKey, xValue)
 end

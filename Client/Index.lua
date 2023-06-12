@@ -3,9 +3,9 @@ local tSlots = {}
 local tWidgets = {}
 
 WGui = {
-    Create = function( sClassName, eParentWidget )
+    Create = function( sClassName, eParentWidget, ... )
         if tInheritedClasses[sClassName] then
-            local eWidget = tInheritedClasses[sClassName]()
+            local eWidget = tInheritedClasses[sClassName](table.unpack({...}))
 
             local iIndex = #tWidgets + 1
             tWidgets[#tWidgets+1] = eWidget
