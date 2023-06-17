@@ -39,6 +39,7 @@ end)
 
 
 Client.Subscribe("Tick", function ()
+    -- Paint update
     for v,_ in pairs(tPaintableWidgets) do
         if v.Paint then
             v:SetValue("INTERNAL_Draw", { Lines = {}, Splines = {} })
@@ -260,3 +261,5 @@ end
 function WGui.BaseWidget:GetParent()
     return WGui.GetByID(self.Parent)
 end
+
+Package.Require( "WidgetAnimation.lua" )
