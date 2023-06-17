@@ -10,7 +10,7 @@ Client.Subscribe("Tick", function ()
         local elapsed = os.clock() - animation.startTime
 
         local t = elapsed / animation.duration
-        
+
         if animation.easingFunction then
             t = animation.easingFunction(t)
         end
@@ -82,6 +82,7 @@ function Animation:Forward()
     self.endValue = self.originalEndValue
     self.isReverse = false
     self:Play()
+    return self
 end
 
 -- Plays the animation in reverse
@@ -99,6 +100,7 @@ function Animation:Reverse()
     self.endValue = self.originalStartValue
     self.isReverse = true
     self:Play()
+    return self
 end
 
 
@@ -120,6 +122,7 @@ function Animation:Stop()
     if self.onCompleted then
         self.onCompleted(self.isReverse or false)
     end
+    return self
 end
 
 -- Forces the animation to play (useful when the animation is stopped)
@@ -132,4 +135,5 @@ function Animation:Play()
         self.id = newIndex
         WGuiAnimations[newIndex] = self
     end
+    return self
 end
