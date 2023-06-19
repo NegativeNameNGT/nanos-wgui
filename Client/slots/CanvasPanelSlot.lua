@@ -63,7 +63,6 @@ function CanvasPanelSlot.Methods.SetAnchor( self, Anchor )
     self:CallBlueprintEvent("SetAnchor", Anchor.Min, Anchor.Max)
     self:SetAlignment( Anchor.Alignment )
 
-    print(self:GetSize().Y)
     if Anchor.bResetOffsetRight then
         self:SetSize(Vector2D(0, self:GetSize().Y))
     end
