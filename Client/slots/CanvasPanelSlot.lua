@@ -25,7 +25,7 @@ end
 -- Gets the size of the slot
 ---@return Vector2D
 function CanvasPanelSlot.Methods.GetSize( self )
-    return self.Slot.Size or Vector2D()
+    return self.Slot.Size or Vector2D(100, 40)
 end
 
 -- Sets the ZOrder of the slot
@@ -63,6 +63,7 @@ function CanvasPanelSlot.Methods.SetAnchor( self, Anchor )
     self:CallBlueprintEvent("SetAnchor", Anchor.Min, Anchor.Max)
     self:SetAlignment( Anchor.Alignment )
 
+    print(self:GetSize().Y)
     if Anchor.bResetOffsetRight then
         self:SetSize(Vector2D(0, self:GetSize().Y))
     end
