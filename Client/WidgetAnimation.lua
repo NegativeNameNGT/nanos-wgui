@@ -7,6 +7,13 @@ WGuiAnimations = {}
 -- Tick event to update the animations --
 Client.Subscribe("Tick", function ()
     for _, animation in pairs(WGuiAnimations) do
+        -- Check if animation is still valid --
+        if not (animation.widget and animation.widget:IsValid()) then
+            -- Destroy animation --
+            rawstop_animation(animation)
+            return
+        end
+
         local elapsed = os.clock() - animation.startTime
 
         local t = elapsed / animation.duration
