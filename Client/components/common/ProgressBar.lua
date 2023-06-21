@@ -30,8 +30,13 @@ function WGui.NProgressBar:SetFillColor( tFillColor )
 end
 
 function WGui.NProgressBar:SetPercent( fPercent )
+    self.Percent = fPercent
     self:CallBlueprintEvent("SetPercent", fPercent)
     return self
+end
+
+function WGui.NProgressBar:GetPercent()
+    return self.Percent or 0.68
 end
 
 function WGui.NProgressBar:SetIsMarquee( bIsMarquee )
