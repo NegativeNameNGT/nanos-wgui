@@ -59,34 +59,11 @@ function WGui.NRetainerBox:SetEffectMaterial( xMaterial )
         self:CallBlueprintEvent("SetEffectMaterial", nil, sAssetPath)
         return self
     end
-    self:CallBlueprintEvent("SetEffectMaterial", xMaterial)
-    return self
-end
 
--- Sets a vector parameter to the effect material
----@param sParameterName string
----@param vValue Vector
-function WGui.NRetainerBox:SetVectorParameterValue( sParameterName, vValue )
-    self:CallBlueprintEvent("SetVectorParameter", sParameterName, vValue)
-    return self
-end
-
--- Sets a scalar parameter to the effect material
----@param sParameterName string
----@param fValue number
-function WGui.NRetainerBox:SetScalarParameterValue( sParameterName, fValue )
-    self:CallBlueprintEvent("SetScalarParameter", sParameterName, fValue)
-    return self
-end
-
--- Sets a texture parameter to the effect material
----@param sParameterName string
----@param xTexture string
-function WGui.NRetainerBox:SetTextureParameterValue( sParameterName, xTexture )
-    if string.find(xTexture, "package://") then
-        self:CallBlueprintEvent("SetTextureParameter", sParameterName, xTexture)
-    else
-        self:CallBlueprintEvent("SetTextureParameter", sParameterName, nil, xTexture)
+    if type(xMaterial) == "table" and getmetatable(xMaterial) == WGui.MaterialDynamic then
+        self:CallBlueprintEvent("SetEffectMaterial", nil, "", xMaterial.ID)
+        return self
     end
+    self:CallBlueprintEvent("SetEffectMaterial", xMaterial)
     return self
 end
