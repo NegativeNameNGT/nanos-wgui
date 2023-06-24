@@ -60,7 +60,7 @@ function WGui.NRetainerBox:SetEffectMaterial( xMaterial )
         return self
     end
 
-    if type(xMaterial) == "table" and getmetatable(xMaterial) == WGui.MaterialDynamic then
+    if type(xMaterial) == "table" and getmetatable(xMaterial) == WGui.DynamicMaterial then
         self:CallBlueprintEvent("SetEffectMaterial", nil, "", xMaterial.ID)
         return self
     end

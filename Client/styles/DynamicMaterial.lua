@@ -1,11 +1,11 @@
-WGui.MaterialDynamic = {}
-WGui.MaterialDynamic.__index = WGui.MaterialDynamic
+WGui.DynamicMaterial = {}
+WGui.DynamicMaterial.__index = WGui.DynamicMaterial
 local idCounter = 0
 
 -- DynamicMaterial constructor
 ---@param xMaterial string | Material
 ---@return table
-function WGui.CreateMaterialDynamic( xMaterial )
+function WGui.CreateDynamicMaterial( xMaterial )
     if not xMaterial then
         assert(false, "DynamicMaterial: Material cannot be nil!")
     end
@@ -13,7 +13,7 @@ function WGui.CreateMaterialDynamic( xMaterial )
 
     local oMaterial = {}
     oMaterial.ID = idCounter
-    setmetatable(oMaterial, WGui.MaterialDynamic)
+    setmetatable(oMaterial, WGui.DynamicMaterial)
 
     if type(xMaterial) == "string" then
         local sAssetPath = WGui.GetAssetPath("[assets.materials]", xMaterial)
@@ -28,7 +28,7 @@ end
 -- Sets a vector parameter to the material
 ---@param sParameterName string
 ---@param cValue Color
-function WGui.MaterialDynamic:SetVectorParameterValue( sParameterName, cValue )
+function WGui.DynamicMaterial:SetVectorParameterValue( sParameterName, cValue )
     WGui.Utility:CallBlueprintEvent( "SetVectorParameterValue", self.ID, sParameterName, cValue )
     return self
 end
@@ -36,7 +36,7 @@ end
 -- Sets a scalar parameter to the material
 ---@param sParameterName string
 ---@param fValue number
-function WGui.MaterialDynamic:SetScalarParameterValue( sParameterName, fValue )
+function WGui.DynamicMaterial:SetScalarParameterValue( sParameterName, fValue )
     WGui.Utility:CallBlueprintEvent( "SetScalarParameterValue", self.ID, sParameterName, fValue )
     return self
 end
@@ -44,7 +44,7 @@ end
 -- Sets a vector4 parameter to the material
 ---@param sParameterName string
 ---@param tValue table
-function WGui.MaterialDynamic:SetVector4ParameterValue( sParameterName, tValue )
+function WGui.DynamicMaterial:SetVector4ParameterValue( sParameterName, tValue )
     WGui.Utility:CallBlueprintEvent( "SetVector4ParameterValue", self.ID, sParameterName, tValue )
     return self
 end
@@ -52,7 +52,7 @@ end
 -- Sets a texture parameter to the material
 ---@param sParameterName string
 ---@param xTexture string
-function WGui.MaterialDynamic:SetTextureParameterValue( sParameterName, xTexture )
+function WGui.DynamicMaterial:SetTextureParameterValue( sParameterName, xTexture )
     if string.sub(xTexture, 1, 7) == "http://" or string.sub(xTexture, 1, 8) == "https://" or string.sub(xTexture, 1, 6) == "ftp://" then
         WGui.Utility:CallBlueprintEvent("SetTextureParameterValue", self.ID, sParameterName, xTexture)
         return self
@@ -68,7 +68,7 @@ function WGui.MaterialDynamic:SetTextureParameterValue( sParameterName, xTexture
 end
 
 -- Destroys the material
-function WGui.MaterialDynamic:Destroy()
+function WGui.DynamicMaterial:Destroy()
     WGui.Utility:CallBlueprintEvent( "DestroyDynamicMaterial", self.ID )
     setmetatable(self, nil)
     return

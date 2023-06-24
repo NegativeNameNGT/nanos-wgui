@@ -151,6 +151,13 @@ function WGui.BaseWidget:InvalidateLayout()
     return self
 end
 
+-- Sets the forced volatility of the widget.
+---@param bForce boolean
+function WGui.BaseWidget:ForceVolatile(bForce)
+    self:CallBlueprintEvent("ForceVolatile", bForce)
+    return self
+end
+
 ---@param ToolTip string
 function WGui.BaseWidget:SetToolTipText(ToolTip)
     self:CallBlueprintEvent("SetToolTipText", ToolTip)
