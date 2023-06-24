@@ -55,11 +55,18 @@ function WGui.NEditableTextMulti:SetJustification( eJustification )
 end
 
 function WGui.NEditableTextMulti:SetFont( sFont, sTypeFace )
-    if string.sub(sFont, 1, 1) == "/" then
-        self:CallBlueprintEvent("SetFont", nil, sTypeFace or "", sFont)
+    if not WGui.IsAssetRegistryLoaded() then
+        WGui.QueueAsset(WGui.NEditableTextMulti.SetFont, self:GetID(), {sFont, sTypeFace})
         return self
     end
-    self:CallBlueprintEvent("SetFont", sFont, sTypeFace or "")
+
+    local sAssetPath = WGui.GetAssetPath("[assets.others]", sFont)
+    if string.find(sFont, "package://") then
+        self:CallBlueprintEvent("SetFont", sFont, sTypeFace or "")
+        return self
+    end
+
+    self:CallBlueprintEvent("SetFont", nil, sTypeFace or "", sAssetPath)
     return self
 end
 

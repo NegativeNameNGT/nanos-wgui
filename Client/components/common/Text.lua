@@ -8,7 +8,13 @@ function WGui.NText:Constructor()
     self:CallBlueprintEvent("Initialize", self.NativeWidget)
 
     self:SetVisibility(WGui.Visibility.NotHitTestableAll)
-    self:SetJustification(WGui.TextJustify.Center)
+
+    -- Sets the justification as center if the parent is not a canvas
+    self.OnAdded = function ( oParent )
+        if not (oParent:IsA(WGui.NCanvas)) then
+            self:SetJustification(WGui.TextJustify.Center)
+        end
+    end
     return self
 end
 
@@ -71,11 +77,15 @@ end
 ---@param Font string
 ---@param Typeface string
 function WGui.NText:SetFont(Font, Typeface)
-    if string.sub(Font, 1, 1) == "/" then
-        self:CallBlueprintEvent("SetFont", nil, Typeface or "", Font)
+    local sAssetPath = WGui.GetAssetPath("[assets.others]", Font, WGui.NText.SetFont, self:GetID(), {Font, Typeface})
+    if not sAssetPath then return self end
+
+    if string.find(Font, "package://") then
+        self:CallBlueprintEvent("SetFont", Font, Typeface or "")
         return self
     end
-    self:CallBlueprintEvent("SetFont", Font, Typeface or "")
+
+    self:CallBlueprintEvent("SetFont", nil, Typeface or "", sAssetPath)
     return self
 end
 

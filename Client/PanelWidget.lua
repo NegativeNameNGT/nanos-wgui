@@ -84,6 +84,10 @@ function WGui.PanelWidget:Add(eChild, tParameters)
     if self.ChildSlot then wgui_raw_addslot(self, eChild) end
 
     wgui_raw_add(self, eChild)
+
+    if eChild.OnAdded then
+        eChild.OnAdded(self)
+    end
     return self
 end
 

@@ -31,17 +31,28 @@ WGui.Brush = function ()
     function tNewBrush.SetImage( sPath )
         if string.sub(sPath, 1, 7) == "http://" or string.sub(sPath, 1, 8) == "https://" or string.sub(sPath, 1, 6) == "ftp://" then
             tNewBrush.ImageURL = sPath
-        else
-            tNewBrush.ImageURL = nil
-            tNewBrush.ImageTexture = sPath
+            return tNewBrush
         end
 
+        if string.find(sPath, "package://") then
+            tNewBrush.ImageURL = nil
+            tNewBrush.ImageTexture = sPath
+            return tNewBrush
+        end
+
+        tNewBrush.ImageURL = sPath
+        tNewBrush.ImageTexture = nil
         return tNewBrush
     end
 
     function tNewBrush.SetMaterial( eMaterial )
-        tNewBrush.ImageURL = nil
-        tNewBrush.ImageTexture = eMaterial
+        if type(eMaterial) == "string" then
+            tNewBrush.ImageURL = nil
+            tNewBrush.ImageTexture = eMaterial
+            return tNewBrush
+        end
+        tNewBrush.ImageTexture = nil
+        tNewBrush.ImageURL = tostring(eMaterial.ID)
         
         return tNewBrush
     end

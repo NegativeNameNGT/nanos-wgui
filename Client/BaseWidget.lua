@@ -145,6 +145,12 @@ function WGui.BaseWidget:GetPadding()
     return self.Padding or { Left = 0, Top = 0, Right = 0, Bottom = 0 }
 end
 
+-- Invalidates the widget from the view of a layout caching widget that my own this widget. Will force the owning widget to redraw and cache children on the next pass.
+function WGui.BaseWidget:InvalidateLayout()
+    self:CallBlueprintEvent("InvalidateLayoutAndVolatility")
+    return self
+end
+
 ---@param ToolTip string
 function WGui.BaseWidget:SetToolTipText(ToolTip)
     self:CallBlueprintEvent("SetToolTipText", ToolTip)

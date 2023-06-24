@@ -1,17 +1,25 @@
 local tInheritedClasses = {}
 local tSlots = {}
 local tWidgets = {}
+local iMaxWidgetID = 0
+
+-- Asset Manager --
+local tAssetPacksData = nil
+local tAssetPathCache = {}
+local tAssetQueue = {}
+
+-------------------
 
 WGui = {
     Create = function( sClassName, eParentWidget, ... )
         if tInheritedClasses[sClassName] then
             local eWidget = tInheritedClasses[sClassName](table.unpack({...}))
 
-            local iIndex = #tWidgets + 1
-            tWidgets[#tWidgets+1] = eWidget
-            eWidget:SetBlueprintPropertyValue("ID", iIndex)
+            iMaxWidgetID = iMaxWidgetID + 1
+            tWidgets[iMaxWidgetID] = eWidget
+            eWidget:SetBlueprintPropertyValue("ID", iMaxWidgetID)
             eWidget:SetBlueprintPropertyValue("WidgetUtility", WGui.Utility)
-            eWidget.ID = iIndex
+            eWidget.ID = iMaxWidgetID
 
             if eParentWidget and eParentWidget:IsValid() then
                 eParentWidget:Add(eWidget)
@@ -49,7 +57,7 @@ WGui = {
         FilledBottom = { Min = Vector2D(0, 1), Max = Vector2D(1, 1), Alignment = Vector2D(0, 1), bResetOffsetRight = true },
         FilledRight = { Min = Vector2D(1, 0), Max = Vector2D(1, 1), Alignment = Vector2D(1, 0), bResetOffsetBottom = true },
         FilledLeft = { Min = Vector2D(0, 0), Max = Vector2D(0, 1), Alignment = Vector2D(), bResetOffsetBottom = true },
-        Filled = { Min = Vector2D(0, 0), Max = Vector2D(1, 1), Alignment = Vector2D(), bResetOffsetRight = true, bResetOffsetBottom = true },  
+        Filled = { Min = Vector2D(0, 0), Max = Vector2D(1, 1), Alignment = Vector2D(), bResetOffsetRight = true, bResetOffsetBottom = true },
     },
 
     DrawType = {
@@ -180,7 +188,7 @@ WGui = {
         OnMouseClick = 2,
         Direct = 3
     },
-    
+
     DragPivot = {
         MouseDown = 0,
         TopLeft = 1,
@@ -221,6 +229,7 @@ for _,v in pairs( Package.GetDirectories("Client/components/") ) do
 end
 
 Package.Require("styles/Brush.lua")
+Package.Require("styles/DynamicMaterial.lua")
 
 -- Slots
 function RegisterChildSlot( sSlotName )
@@ -235,4 +244,74 @@ end
 
 for _,v in pairs( Package.GetFiles( "Client/slots/", ".lua" ) ) do
     Package.Require(v)
+end
+
+-- Asset Packs --
+
+-- Returns true if the asset registry is loaded
+---@return boolean
+function WGui.IsAssetRegistryLoaded()
+    return tAssetPacksData ~= nil
+end
+
+-- Adds an asset to the asset registry queue
+function WGui.QueueAsset( fFunction, iOwnerID, tParameters )
+    tAssetQueue[#tAssetQueue+1] = { fFunction, iOwnerID, tParameters }
+end
+
+-- Returns the asset path for a given asset pack and asset name
+---@param sKey string
+---@param sAssetPath string
+---@return string | nil
+function WGui.GetAssetPath(sKey, sAssetPath, fFunc, iOwnerID, tParams)
+    if tAssetPathCache[sAssetPath] then
+        return tAssetPathCache[sAssetPath]
+    end
+
+    local assetPack, assetName = string.match(sAssetPath, "^(.-)::(.*)$")
+    if assetPack then
+        if not WGui.IsAssetRegistryLoaded() and fFunc ~= nil then
+            WGui.QueueAsset(fFunc, iOwnerID, tParams)
+            return nil
+        end
+
+        local tAssetPack = tAssetPacksData[assetPack]
+
+        if tAssetPack and tAssetPack[sKey] and tAssetPack[sKey][assetName] then
+            local tAssetPackData = tAssetPack[sKey][assetName]
+            local sAssetRawPath = tAssetPackData
+            local rootPath = tAssetPackData["is_plugin_content"] and tAssetPack.path or "/Game"
+            local fullPath = string.format("%s/%s/%s", rootPath, tAssetPack.path, sAssetRawPath)
+
+            tAssetPathCache[sAssetPath] = fullPath
+            return fullPath
+        end
+    end
+
+    return sAssetPath
+end
+
+local function onSpawnLocalPlayer()
+	local sAssetPack = Client.GetValue( "wgui::asset_packs_data" )
+    tAssetPacksData = JSON.parse(sAssetPack)
+
+    Client.SetValue( "wgui::asset_packs_data", nil )
+    
+    -- Execute the asset queue
+    for _,v in pairs(tAssetQueue) do
+        local fFunction = v[1]
+        local iOwnerID = v[2]
+        local tParameters = v[3]
+
+        local oWidgetOwner = WGui.GetByID(iOwnerID)
+        if oWidgetOwner and oWidgetOwner:IsValid() then
+            fFunction(oWidgetOwner, table.unpack(tParameters))
+        end
+    end
+    tAssetQueue = nil
+end
+Client.Subscribe("SpawnLocalPlayer", onSpawnLocalPlayer)
+
+if Client.GetLocalPlayer() then
+    onSpawnLocalPlayer()
 end
