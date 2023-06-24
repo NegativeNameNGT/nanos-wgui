@@ -51,9 +51,16 @@ WGui.Brush = function ()
             tNewBrush.ImageTexture = eMaterial
             return tNewBrush
         end
-        tNewBrush.ImageTexture = nil
+
+        if not eMaterial.ID then
+            tNewBrush.ImageTexture = eMaterial
+            tNewBrush.ImageURL = nil
+            return tNewBrush
+        end
+
         tNewBrush.ImageURL = tostring(eMaterial.ID)
-        
+        tNewBrush.ImageTexture = nil
+
         return tNewBrush
     end
 

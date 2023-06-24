@@ -53,7 +53,7 @@ end
 ---@param xMaterial string
 function WGui.NRetainerBox:SetEffectMaterial( xMaterial )
     if type(xMaterial) == "string" then
-        local sAssetPath = WGui.GetAssetPath("[assets.others]", xMaterial, WGui.NText.SetFont, self:GetID(), {xMaterial})
+        local sAssetPath = WGui.GetAssetPath("[assets.materials]", xMaterial)
         if not sAssetPath then return self end
 
         self:CallBlueprintEvent("SetEffectMaterial", nil, sAssetPath)
