@@ -13,6 +13,8 @@ function WGui.NText:Constructor()
     self.OnAdded = function ( oParent )
         if not (oParent:IsA(WGui.NCanvas)) then
             self:SetJustification(WGui.TextJustify.Center)
+        else
+            self:SetJustification(WGui.TextJustify.Left)
         end
     end
     return self
