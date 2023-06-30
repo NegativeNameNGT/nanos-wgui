@@ -54,7 +54,9 @@ local tLoadedAssetPacks = Assets.GetAssetPacks()
 for _, tData in pairs(tLoadedAssetPacks) do
     local sPath = tData["Path"]
     if sPath == "nanos-world" then goto continue end
-    local sTomlString = File("Assets/" .. sPath .. "/Assets.toml"):Read()
+    local oFile = File("Assets/" .. sPath .. "/Assets.toml")
+    local sTomlString = oFile:Read()
+    oFile:Close()
     local tParsedData = parseTomlString(sTomlString)
 
     if next(tParsedData) == nil then goto continue end
@@ -64,3 +66,4 @@ for _, tData in pairs(tLoadedAssetPacks) do
     ::continue::
 end
 Server.SetValue("wgui::asset_packs_data", JSON.stringify(tAssetPacksData), true)
+
