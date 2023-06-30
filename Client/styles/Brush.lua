@@ -34,12 +34,20 @@ WGui.Brush = function ()
             return tNewBrush
         end
 
-        if string.find(sPath, "package://") then
+        -- Special Path
+        if string.sub(sPath, 1, 7) == "package" then
             tNewBrush.ImageURL = nil
             tNewBrush.ImageTexture = sPath
             return tNewBrush
         end
 
+        -- Steam Avatar
+        if string.sub(sPath, 1, 5) == "steam" then
+            tNewBrush.ImageURL = nil
+            tNewBrush.ImageTexture = sPath
+            return tNewBrush
+        end
+        
         tNewBrush.ImageURL = sPath
         tNewBrush.ImageTexture = nil
         return tNewBrush
@@ -47,14 +55,14 @@ WGui.Brush = function ()
 
     function tNewBrush.SetMaterial( eMaterial )
         if type(eMaterial) == "string" then
-            tNewBrush.ImageURL = nil
-            tNewBrush.ImageTexture = eMaterial
+            tNewBrush.ImageURL, tNewBrush.ImageTexture = nil, nil
+            tNewBrush.ImageMaterial = eMaterial
             return tNewBrush
         end
 
         if not eMaterial.ID then
-            tNewBrush.ImageTexture = eMaterial
-            tNewBrush.ImageURL = nil
+            tNewBrush.ImageMaterial = eMaterial
+            tNewBrush.ImageURL, tNewBrush.ImageTexture = nil, nil
             return tNewBrush
         end
 
