@@ -53,10 +53,12 @@ end
 ---@param xMaterial string
 function WGui.NRetainerBox:SetEffectMaterial( xMaterial )
     if type(xMaterial) == "string" then
-        local sAssetPath = WGui.GetAssetPath("[assets.materials]", xMaterial)
-        if not sAssetPath then return self end
-
-        self:CallBlueprintEvent("SetEffectMaterial", nil, sAssetPath)
+        local sAssetPath = Assets.GetAssetPath(xMaterial, AssetType.Material)
+        if sAssetPath ~= xMaterial then
+            self:CallBlueprintEvent("SetEffectMaterial", nil, sAssetPath)
+            return self
+        end
+        self:CallBlueprintEvent("SetEffectMaterial", nil, xMaterial)
         return self
     end
 

@@ -4,24 +4,36 @@ local idCounter = 0
 
 -- DynamicMaterial constructor
 ---@param xMaterial string | Material
----@return table
+---@return table | nil
 function WGui.CreateDynamicMaterial( xMaterial )
     if not xMaterial then
         assert(false, "DynamicMaterial: Material cannot be nil!")
+        return nil
     end
+
+    if type(xMaterial) == "string" and xMaterial == "" then
+        assert(false, "DynamicMaterial: Material Reference cannot be empty!")
+        return nil
+    end
+
     idCounter = idCounter + 1
 
     local oMaterial = {}
     oMaterial.ID = idCounter
-    setmetatable(oMaterial, WGui.DynamicMaterial)
 
     if type(xMaterial) == "string" then
-        local sAssetPath = WGui.GetAssetPath("[assets.materials]", xMaterial)
-        if not sAssetPath then assert(false, "DynamicMaterial: Material Path not found.") return oMaterial end
-    
+        if xMaterial == "" then
+            return oMaterial
+        end
+
+        local sAssetPath = Assets.GetAssetPath(xMaterial, AssetType.Material)
+
         local bSuccess = WGui.Utility:CallBlueprintEvent( "CreateDynamicMaterial", oMaterial.ID, sAssetPath )
-        if not bSuccess then assert(false, "DynamicMaterial: Failed to create material.") return oMaterial end
+
+        if not bSuccess then assert(false, "DynamicMaterial: Failed to create material.") return nil end
     end
+
+    setmetatable(oMaterial, WGui.DynamicMaterial)
     return oMaterial
 end
 

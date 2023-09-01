@@ -79,15 +79,20 @@ end
 ---@param Font string
 ---@param Typeface string
 function WGui.NText:SetFont(Font, Typeface)
-    local sAssetPath = WGui.GetAssetPath("[assets.others]", Font, WGui.NText.SetFont, self:GetID(), {Font, Typeface})
-    if not sAssetPath then return self end
+    local sAssetReferencePath = Assets.GetAssetPath(Font, AssetType.Other)
+    if sAssetReferencePath ~= Font then
+        local iLastDotPos = sAssetReferencePath:find("[^.]*$")
+        local sResult = iLastDotPos and sAssetReferencePath:sub(1, iLastDotPos - 2) or sAssetReferencePath
+        self:CallBlueprintEvent("SetFont", nil, Typeface or "", sResult)
+        return self
+    end
 
     if string.find(Font, "package://") then
         self:CallBlueprintEvent("SetFont", Font, Typeface or "")
         return self
     end
 
-    self:CallBlueprintEvent("SetFont", nil, Typeface or "", sAssetPath)
+    self:CallBlueprintEvent("SetFont", nil, Typeface or "", Font)
     return self
 end
 

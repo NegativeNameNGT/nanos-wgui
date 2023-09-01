@@ -19,10 +19,14 @@ end
 -- Sets the text style
 ---@param TextStyle string
 function WGui.NRichText:SetTextStyle(TextStyle)
-    local sAssetPath = WGui.GetAssetPath("[assets.others]", TextStyle, WGui.NRichText.SetTextStyle, self:GetID(), {TextStyle})
-    if not sAssetPath then return self end
+    local sAssetReferencePath = Assets.GetAssetPath(TextStyle, AssetType.Other)
+    if sAssetReferencePath ~= TextStyle then
+        local iLastDotPos = sAssetReferencePath:find("[^.]*$")
+        local sResult = iLastDotPos and sAssetReferencePath:sub(1, iLastDotPos - 2) or sAssetReferencePath
+        self:CallBlueprintEvent("SetTextStyleSet", sResult)
+        return self
+    end
 
-    self:CallBlueprintEvent("SetTextStyleSet", sAssetPath)
     return self
 end
 
